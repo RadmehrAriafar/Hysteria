@@ -3,12 +3,16 @@ tls:
   cert: /root/hfolder/some.crt
   key: /root/hfolder/some.key
   sniGuard: dns-san
+obfs:
+  type: salamander
+  salamander:
+    password:
 quic:
   initStreamReceiveWindow: 8388608
   maxStreamReceiveWindow: 16777216
   initConnReceiveWindow: 20971520
   maxConnReceiveWindow: 41943040
-  maxIdleTimeout: 60s
+  maxIdleTimeout: 30s
   maxIncomingStreams: 1024
   disablePathMTUDiscovery: false
 speedTest: false
@@ -17,8 +21,11 @@ udpIdleTimeout: 60s
 auth:
   type: password
   password:
+acl:
+  inline:
+    - reject(all, udp/443)
 outbounds:
-  - name: direct-out
+  - name: ipv4_only
     type: direct
     direct:
       mode: 4
